@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define pi acos(-1.0)
+//cout << fixed << setprecision(8) << a << endl;
+#define Fast_Input ios_base :: sync_with_stdio(false),cin.tie(NULL),cout.tie(NULL);
+#define pb push_back
+#define mem(a, b)     memset(a, b, sizeof(a))
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+typedef long long ll;
+typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update>ordered_set;
+/*sort(v.begin(), v.end(),
+     [](const pair<int, int>& x, const pair<int, int>& y)
+{
+    if (x.first != y.first)
+        return x.first < y.first;
+    return x.second < y.second;
+});
+*/
+int const fx[]= {+1,+0,-1,+1};
+int const fy[]= {-1,+1,+0,+0};
+const int inf = numeric_limits<int>::max();
+const int mx=1e9;
+int findTrailingZeros(int n)
+{
+    int count = 0,i;
+    for (i = 5; n / i >= 1; i *= 5)
+        count += n / i;
+    return count;
+}
+int Bsearch(int x,int y,int n)
+{
+    int mid,start=x,en=y,now;
+    while(start<=en)
+    {
+        mid=(start+en)/2;
+        now=findTrailingZeros(mid);
+        if(now==n)return mid;
+        else if(now>n)en=mid-1;
+        else start=mid+1;
+    }
+    return -1;
+}
+int main()
+{
+    int t,ca=0;
+    scanf("%d",&t);
+    while(t--)
+    {
+        ll n,x,ans;
+        scanf("%d",&n);
+        x=5*n;
+        ans=Bsearch(1,x,n);
+        if(ans==-1)printf("Case %d: impossible\n",++ca);
+        else
+        {
+            if(ans%5!=0)ans=(ans/5)*5;
+            printf("Case %d: %lld\n",++ca,ans);
+        }
+    }
+    return 0;
+}
